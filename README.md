@@ -209,20 +209,20 @@ drwx------ 2 salt salt 4096 Nov 27 20:52 keyring-test
 
 ./celestia-bridge/keys/keyring-test:
 total 8
--rw------- 1 salt salt 546 Nov 27 20:52 181c0c722752a17e6b13c666f7734ce12cddd8.address
+-rw------- 1 salt salt 546 Nov 27 20:52 181c0c722752a17e6b13c666f7734ce1i1ksmc1.address
 -rw------- 1 salt salt 760 Nov 27 20:52 my_celes_key.info
 ```
 
 ## Testing the Failover
 To verify the failover configuration, use the `test=True` flag with these commands:
 
-### Backup the Current Instance:
+### Set Current Instance as Backup:
 ```bash
 sudo salt <current_server> state.apply celestia.backup_bridge test=True
 sudo salt <current_server> state.apply celestia.backup_app test=True
 ```
 
-### Activate the New Instance:
+### Set Backup Instance as Active:
 ```bash
 sudo salt <new_server> state.apply celestia.active_app test=True
 sudo salt <new_server> state.apply celestia.active_bridge test=True
