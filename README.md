@@ -224,11 +224,14 @@ sudo salt <current_server> state.apply celestia.backup_app test=True
 
 ### Set Backup Instance as Active:
 ```bash
-sudo salt <new_server> state.apply celestia.active_app test=True
-sudo salt <new_server> state.apply celestia.active_bridge test=True
+sudo salt <backup_server> state.apply celestia.active_app test=True
+sudo salt <backup_server> state.apply celestia.active_bridge test=True
 ```
 
-Once verified, remove the `test=True` flag and rerun the commands for production activation.
+⚠️: **Double-sign risk** Setting Backup instance as active before making Current instance as backup will result in dual-active condition, which might result in double-sign slashing!
+Ensure that your `double_sign_check_height` config setting is set to a non-zero value to prevent accidental switchover.
+
+Once verified, remove the `test=True` flag and rerun the commands to proceed with production failover.
 
 # Contribution
 Contributions are welcome! Feel free to submit pull requests or report issues to help improve this repository.
