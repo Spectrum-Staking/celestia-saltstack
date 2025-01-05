@@ -1,38 +1,16 @@
 # Table of Contents
 
 1. [Celestia Salt Deployment](#celestia-salt-deployment)
-   1. [Features](#features)
 2. [Prerequisites](#prerequisites)
-   1. [Configure Your Salt Environment](#configure-your-salt-environment)
-   2. [Copy the Celestia configuration to the Salt pillar](#copy-the-celestia-configuration-to-the-salt-pillar)
-   3. [Copy Celestia deployment files](#copy-celestia-deployment-files)
-   4. [Refresh Salt Pillar Data](#refresh-salt-pillar-data)
 3. [Automation Overview](#automation-overview)
    1. [Celestia-Appd Deployment Details](#celestia-appd-deployment-details)
-      1. [User and Environment Setup](#user-and-environment-setup)
-      2. [Repository Cloning and Binary Installation](#repository-cloning-and-binary-installation)
-      3. [Service Configuration](#service-configuration)
-      4. [Node Initialization](#node-initialization)
-      5. [Configuration Updates](#configuration-updates)
-      6. [Wallet Creation](#wallet-creation)
-      7. [Service Launch and Logs](#service-launch-and-logs)
    2. [Celestia-Bridge Deployment Details](#celestia-bridge-deployment-details)
-      1. [User and Environment Setup](#user-and-environment-setup-1)
-      2. [Repository Cloning and Binary Installation](#repository-cloning-and-binary-installation-1)
-      3. [Service Configuration](#service-configuration-1)
-      4. [Bridge Initialization](#bridge-initialization)
-      5. [Configuration Updates](#configuration-updates-1)
-      6. [Service Launch and Logs](#service-launch-and-logs-1)
 4. [Step-by-Step Installation Instructions](#step-by-step-installation-instructions)
-   1. [Step 1: Validate Your Salt Environment](#step-1-validate-your-salt-environment)
-   2. [Step 2: Deploy the Services](#step-2-deploy-the-services)
 5. [Failover Setup](#failover-setup)
    1. [Celestia-Appd Failover](#celestia-appd-failover)
    2. [Celestia-Bridge Failover](#celestia-bridge-failover)
-6. [Testing the Failover](#testing-the-failover)
-   1. [Backup the Current Instance](#backup-the-current-instance)
-   2. [Activate the New Instance](#activate-the-new-instance)
-7. [Contribution](#contribution)
+   3. [Testing the Failover](#testing-the-failover)
+6. [Contribution](#contribution)
 
 # Celestia Salt Deployment
 
@@ -192,10 +170,10 @@ Once validation is complete, deploy the Celestia bridge by running:
 sudo salt <minion_name> state.apply celestia.deploy_celestia_bridge
 ```
 
-## Failover Setup
+# Failover Setup
 For users running two independent instances of `celestia-appd` or `celestia-bridge`, follow these steps:
 
-### Celestia-Appd Failover
+## Celestia-Appd Failover
 Copy the following files to the Salt server under the `active/celestia-appd` folder:
 
 ```bash
@@ -252,6 +230,6 @@ sudo salt <new_server> state.apply celestia.active_bridge test=True
 
 Once verified, remove the `test=True` flag and rerun the commands for production activation.
 
-## Contribution
+# Contribution
 Contributions are welcome! Feel free to submit pull requests or report issues to help improve this repository.
 
