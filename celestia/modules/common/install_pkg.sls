@@ -1,5 +1,8 @@
 {% set node_type = pillar.get('celestia_config', {}).get('node_type', 'wrong_node_type') %}
 {% set packages = pillar.get('celestia_config', {}).get('packages') %}
+
+{% set celestia_grain = salt['grains.get']('celestia', []) %}
+{% set node_type = celestia_grain[0] if celestia_grain else 'unknown_node_type' %}
 {% set node_config = pillar.get(node_type, {}) %}
 
 
