@@ -21,7 +21,7 @@ add_home_bin_to_path:
     - name: {{ home_folder_path }}/{{ user_name }}/.bashrc
     - text: 'export PATH="{{ home_folder_path }}/{{ user_name }}/bin:$PATH"'
 
-# Clone the Celestia app repository
+# Clone the Celestia appd repository
 celestia_appd_clone_repo:
   git.latest:
     - name: https://github.com/celestiaorg/celestia-app.git
@@ -31,7 +31,7 @@ celestia_appd_clone_repo:
     - force_fetch: True
     - user: {{ user_name }}
 
-# Build the Celestia app binary
+# Build the Celestia appd binary
 celestia_appd_build:
   cmd.run:
     - name: make build
