@@ -1,6 +1,5 @@
 celestia_config:
-  node_type: 'celestia_testnet'
-  valid_node_type: ['celestia_testnet', 'celestia_mainnet']
+  valid_node_type: ['testnet', 'mainnet']
   user_data:
     user_name: 'celestia'
     group: 'celestia'
@@ -21,7 +20,7 @@ celestia_config:
     - ncdu
   wallet_name: 'validator'
 
-celestia_testnet:
+testnet:
   go_ver: '1.23.2'
   celestia_app_version: '3.2.0-mocha'
   chain_id: 'mocha-4'
@@ -36,7 +35,7 @@ celestia_testnet:
   celestia_bridge_core_ip: 'rpc-mocha.pops.one:26657'
   snapshot_url: 'https://snapshots.bwarelabs.com/celestia/testnet/'
 
-celestia_mainnet:
+mainnet:
   go_ver: '1.23.0'
   celestia_app_version: '3.2.0'
   chain_id: 'celestia'
