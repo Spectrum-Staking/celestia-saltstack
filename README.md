@@ -10,7 +10,13 @@
    1. [Celestia-Appd Failover](#celestia-appd-failover)
    2. [Celestia-Bridge Failover](#celestia-bridge-failover)
    3. [Testing the Failover](#testing-the-failover)
-6. [Contribution](#contribution)
+6. [Upgrade Operations](#upgrade-operations)
+   1. [Prerequisites](#prerequisites)
+   2. [Upgrade Operations](#upgrade-operations)
+      1. [Upgrade Process for `celestia-appd`](#upgrade-process-for-celestia-appd)
+      2. [Upgrade Process for `celestia-bridge`](#upgrade-process-for-celestia-bridge)
+   3. [Upgrade Methodology](#upgrade-methodology)
+7. [Contribution](#contribution)
 
 # Celestia Salt Deployment
 
@@ -262,6 +268,81 @@ sudo salt <backup_server> state.apply celestia.active_bridge test=True
 Ensure that your `double_sign_check_height` config setting is set to a non-zero value to prevent accidental switchover.
 
 Once verified, remove the `test=True` flag and rerun the commands to proceed with production failover.
+
+# Celestia Upgrade
+
+Follow the steps below to upgrade `celestia-appd` and `celestia-bridge`.
+
+## Prerequisites
+
+1. **Update the Pillar File**  
+   Edit the pillar file `celestia_config.sls` to include the latest configuration values.
+
+2. **Refresh Salt Pillar Data**  
+   After updating the pillar file, refresh the Salt pillar data across your nodes:  
+   ```bash
+   sudo salt '*' saltutil.refresh_pillar
+   ```
+
+## Upgrade Operations
+
+### Upgrade Process for `celestia-appd`
+
+The `upgrade_celestia_appd.sls` state performs the following steps:
+
+1. **Stop the Service**  
+   - The `celestia-appd` service is stopped to prepare for the upgrade.
+
+2. **Repository Cloning and Binary Installation**  
+   - The `celestia-app` repository is cloned from GitHub.  
+   - The binary is built and moved to `<home_folder>/bin`.  
+   - The cloned repository is cleaned up after installation.
+
+3. **Service Launch**  
+   - The `celestia-appd` service is started.  
+   - Logs are saved in the `celestia_logs/` directory:  
+     - `celestia-appd-status.log`  
+     - `celestia-appd-journal.log`
+
+---
+
+### Upgrade Process for `celestia-bridge`
+
+The `upgrade_celestia_bridge.sls` state performs the following steps:
+
+1. **Stop the Service**  
+   - The `celestia-bridge` service is stopped to prepare for the upgrade.
+
+2. **Repository Cloning and Binary Installation**  
+   - The `celestia-bridge` repository is cloned from GitHub.  
+   - The binary is built and moved to `<home_folder>/bin`.  
+   - The cloned repository is cleaned up after installation.
+
+3. **Service Launch**  
+   - The `celestia-bridge` service is started.  
+   - Logs are saved in the `celestia_logs/` directory:  
+     - `celestia-bridge-status.log`  
+     - `celestia-bridge-journal.log`
+
+## Upgrade Methodology
+
+The following steps outline how to test and execute the upgrades.
+
+### 1. Dry Run (Test Mode)
+
+Use the `test=True` flag to simulate the upgrade process without applying any changes. This allows you to validate the configuration and ensure there are no errors:
+
+```bash
+sudo salt <minion_name> state.apply celestia.upgrade_celestia_appd test=True
+sudo salt <minion_name> state.apply celestia.upgrade_celestia_bridge test=True
+```
+### 2. Apply the Upgrade
+
+Once the test run is successful, apply the changes to perform the upgrade:
+```bash
+sudo salt <minion_name> state.apply celestia.upgrade_celestia_appd
+sudo salt <minion_name> state.apply celestia.upgrade_celestia_bridge
+```
 
 # Contribution
 
