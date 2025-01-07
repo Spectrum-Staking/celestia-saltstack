@@ -21,7 +21,6 @@ setup_cli_config:
         PATH: /srv/celestia/bin:/usr/local/bin:/usr/bin:/bin
     - cwd: {{ home_folder_path }}/{{ user_name }}
 
-# Add validator key with complete output capture
 # Add validator key with complete output
 add_validator_key:
   cmd.run:
