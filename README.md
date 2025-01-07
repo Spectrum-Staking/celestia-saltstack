@@ -27,9 +27,11 @@ This repository provides an automated solution for installing Celestia App (`cel
 # Prerequisites
 
 ## Configure Your Salt Environment
+
 Ensure that your [SaltStack environment](https://docs.saltproject.io/en/latest/contents.html) is properly configured.
 
 ## Copy the Celestia configuration to the Salt pillar:
+
 1. Copy `celestia_config.sls` to your Salt pillar folder.
 2. Update `top.sls` in the pillar directory to include `celestia_config` under the base environment:
 
@@ -39,7 +41,27 @@ base:
     - celestia_config
 ```
 
+## Configure Salt grains for minions
+
+This guide explains how to configure [Salt grains](https://docs.saltproject.io/salt/user-guide/en/latest/topics/grains.html) to automatically determine whether the `testnet` or `mainnet` version should be installed on a minion. By setting the `celestia` grain, Salt states can dynamically adapt and apply the appropriate configuration based on the grain value.
+
+### Add the celestia grain
+To assign the `testnet` value to the `celestia` grain for a specific minion, use the following command:
+
+```yaml
+sudo salt <minion> grains.append celestia testnet
+```
+
+### Remove the celestia grain
+To remove the `testnet` value from the `celestia` grain, use the following command:
+
+```yaml
+
+sudo salt <minion> grains.remove celestia testnet
+```
+
 ## Copy Celestia deployment files
+
 Place the repository files in the directory: `celestia`.
 
 ## Refresh Salt Pillar Data
@@ -96,8 +118,9 @@ These steps are grouped together in `deploy_celestia_appd.sls`:
 ```bash
 $ cat deploy_celestia_appd.sls  
 include:
-  - celestia.modules.celestia_appd.create_user
-  - celestia.modules.celestia_appd.install_pkg
+  - celestia.modules.modules.common.check_grains
+  - celestia.modules.modules.common.create_user
+  - celestia.modules.modules.common.install_pkg
   - celestia.modules.celestia_appd.install_celestia_appd
   - celestia.modules.celestia_appd.update_celestia_appd_config
   - celestia.modules.celestia_appd.get_celestia_appd_snapshot
@@ -138,8 +161,9 @@ These steps are grouped together in `deploy_celestia_bridge.sls`:
 ```bash
 $ cat deploy_celestia_bridge.sls  
 include:
-  - celestia.modules.celestia_bridge.create_user
-  - celestia.modules.celestia_bridge.install_pkg
+  - celestia.modules.modules.common.check_grains
+  - celestia.modules.modules.common.create_user
+  - celestia.modules.modules.common.install_pkg
   - celestia.modules.celestia_bridge.install_celestia_node
   - celestia.modules.celestia_bridge.connect_consensus_bridge
   - celestia.modules.celestia_bridge.start_celestia_bridge
@@ -148,6 +172,7 @@ include:
 # Step-by-Step Installation Instructions
 
 ## Step 1: Validate Your Salt Environment
+
 Before deploying the services, validate your Salt environment by running the following commands with the `test=True` flag:
 
 ```bash
@@ -158,6 +183,7 @@ sudo salt <minion_name> state.apply celestia.deploy_celestia_bridge test=True
 If the commands execute successfully, your Salt environment is ready for deployment.
 
 ## Step 2: Deploy the Services
+
 Once validation is complete, deploy the Celestia node by running:
 
 ```bash
@@ -171,9 +197,11 @@ sudo salt <minion_name> state.apply celestia.deploy_celestia_bridge
 ```
 
 # Failover Setup
+
 For users running two independent instances of `celestia-appd` or `celestia-bridge`, follow these steps:
 
 ## Celestia-Appd Failover
+
 Copy the following files to the Salt server under the `active/celestia-appd` folder:
 
 ```bash
@@ -182,6 +210,7 @@ Copy the following files to the Salt server under the `active/celestia-appd` fol
 ```
 
 ## Celestia-Bridge Failover
+
 Copy the `keys` directory from `.celestia-bridge-mocha-4/keys/` to the Salt server under the `active/celestia-bridge/keys/` folder.
 
 ### Final directory structure example:
@@ -214,6 +243,7 @@ total 8
 ```
 
 ## Testing the Failover
+
 To verify the failover configuration, use the `test=True` flag with these commands:
 
 ### Set Current Instance as Backup:
@@ -234,5 +264,6 @@ Ensure that your `double_sign_check_height` config setting is set to a non-zero 
 Once verified, remove the `test=True` flag and rerun the commands to proceed with production failover.
 
 # Contribution
+
 Contributions are welcome! Feel free to submit pull requests or report issues to help improve this repository.
 
