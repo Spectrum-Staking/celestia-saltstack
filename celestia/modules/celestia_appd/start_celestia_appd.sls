@@ -9,7 +9,7 @@ start_celestia_appd_service:
     - name: celestia-appd.service
     - enable: true
 
-# Create bridge keys directory
+# Create celestia logs directory
 create_celestia_logs_directory:
   file.directory:
     - name: {{ home_folder_path }}/{{ user_name }}/celestia_logs
