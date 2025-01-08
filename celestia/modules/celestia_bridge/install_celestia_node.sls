@@ -114,9 +114,9 @@ create_bridge_keys_directory:
 initialize_celestia_bridge:
   cmd.run:
     - name: |
-        {% if node_type == 'celestia_testnet' %}
+        {% if node_type == 'testnet' %}
         {{ home_folder_path }}/{{ user_name }}/bin/celestia bridge init --core.ip {{ node_config.get('celestia_bridge_core_ip') }} --p2p.network mocha > {{ home_folder_path }}/{{ user_name }}/celestia_keys/bridge_key.txt 2>&1
-        {% elif node_type == 'celestia_mainnet' %}
+        {% elif node_type == 'mainnet' %}
         {{ home_folder_path }}/{{ user_name }}/bin/celestia bridge init --core.ip {{ node_config.get('celestia_bridge_core_ip') }} > {{ home_folder_path }}/{{ user_name }}/celestia_keys/bridge_key 2>&1
         {% else %}
         echo "Invalid node type: {{ node_type }}" >&2
