@@ -1,0 +1,7 @@
+{% macro bridge_dir(node_type, chain_id) %}
+  {%- if node_type == 'mainnet' -%}
+  .celestia-bridge
+  {%- else -%}
+  .celestia-bridge-{{ chain_id }}
+  {%- endif -%}
+{% endmacro %}

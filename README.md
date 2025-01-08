@@ -85,6 +85,10 @@ The deployment process includes two main components:
 - **Celestia-Appd**: Installs and configures the blockchain application node.
 - **Celestia-Bridge**: Installs and configures the bridge node.
 
+[!IMPORTANT]  
+These states do not modify iptables or UFW rules for security reasons.
+Please use your own implementation for this.
+
 ## Celestia-Appd Deployment Details
 
 The `celestia-appd` installation process includes these steps:
@@ -208,7 +212,7 @@ For users running two independent instances of `celestia-appd` or `celestia-brid
 
 ## Celestia-Appd Failover
 
-Copy the following files to the Salt server under the `active/celestia-appd` folder:
+Copy the following files to the Salt server under the `keys/appd` folder:
 
 ```bash
 .celestia-app/config/priv_validator_key.json
@@ -217,7 +221,7 @@ Copy the following files to the Salt server under the `active/celestia-appd` fol
 
 ## Celestia-Bridge Failover
 
-Copy the `keys` directory from `.celestia-bridge-mocha-4/keys/` to the Salt server under the `active/celestia-bridge/keys/` folder.
+Copy the `keys` directory from `.celestia-bridge-mocha-4/keys/` to the Salt server under the `keys/bridge/keys/` folder.
 
 ### Final directory structure example:
 ```bash
@@ -264,8 +268,9 @@ sudo salt <backup_server> state.apply celestia.active_app test=True
 sudo salt <backup_server> state.apply celestia.active_bridge test=True
 ```
 
-⚠️: **Double-sign risk** Setting Backup instance as active before making Current instance as backup will result in dual-active condition, which might result in double-sign slashing!
-Ensure that your `double_sign_check_height` config setting is set to a non-zero value to prevent accidental switchover.
+[!CAUTION]
+**Double-sign risk** Setting Backup instance as active before making Current instance as backup will result in dual-active condition, which might result in double-sign slashing!
+Ensure that your `double_sign_check_height` config setting is set to a non-zero value to prevent double-slashing during accidental switchover.
 
 Once verified, remove the `test=True` flag and rerun the commands to proceed with production failover.
 
