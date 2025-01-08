@@ -31,7 +31,7 @@ check_celestia_bridge_journal_logs:
   cmd.run:
     - name: |
         journalctl -u celestia-bridge > \
-        {{ home_folder_path }}/{{ user_name }}/celestia_logs//celestia_logs/celestia-bridge-journal.log 2>&1
+        {{ home_folder_path }}/{{ user_name }}/celestia_logs/celestia-bridge-journal.log 2>&1
     - cwd: {{ home_folder_path }}/{{ user_name }}
     - runas: {{ user_name }}
     - shell: /bin/bash
