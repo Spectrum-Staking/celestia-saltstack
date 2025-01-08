@@ -4,7 +4,7 @@
 
 {% set celestia_grain = salt['grains.get']('celestia', []) %}
 {% set node_type = celestia_grain[0] if celestia_grain else 'unknown_node_type' %}
-{% set node_config = pillar.get(node_type, {}) %}
+{% set node_config = salt['pillar.get']('celestia_config').get(node_type, {}) %}
 
 {% set current_date = salt['cmd.run']('date +%Y%m%d') %}
 {% set celestia_snapshot = 'celestia' + current_date + '.tar.lz4' %}
