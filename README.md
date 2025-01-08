@@ -85,9 +85,9 @@ The deployment process includes two main components:
 - **Celestia-Appd**: Installs and configures the blockchain application node.
 - **Celestia-Bridge**: Installs and configures the bridge node.
 
-[!IMPORTANT]  
-These states do not modify iptables or UFW rules for security reasons.
-Please use your own implementation for this.
+> [!IMPORTANT]
+> These states do not modify iptables or UFW rules for security reasons.
+> Please use your own implementation for this.
 
 ## Celestia-Appd Deployment Details
 
@@ -268,9 +268,9 @@ sudo salt <backup_server> state.apply celestia.active_app test=True
 sudo salt <backup_server> state.apply celestia.active_bridge test=True
 ```
 
-[!CAUTION]
-**Double-sign risk** Setting Backup instance as active before making Current instance as backup will result in dual-active condition, which might result in double-sign slashing!
-Ensure that your `double_sign_check_height` config setting is set to a non-zero value to prevent double-slashing during accidental switchover.
+> [!CAUTION]
+> **Double-sign risk** Setting Backup instance as active before making Current instance as backup will result in dual-active condition, which might result in double-sign slashing!
+> Ensure that your `double_sign_check_height` config setting is set to a non-zero value to prevent double-slashing during accidental switchover.
 
 Once verified, remove the `test=True` flag and rerun the commands to proceed with production failover.
 
