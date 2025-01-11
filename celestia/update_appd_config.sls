@@ -15,3 +15,11 @@ config:
       - {{ home_folder_path }}/{{ user_name }}/.celestia-app/config/app.toml:
         - source: salt://celestia/config/{{ celestia_grain[0] }}/appd/app.toml
         - template: jinja
+
+restart_appd:
+  service.running:
+    - name: celestia-appd
+    - enable: true
+    - watch:
+      - file: {{ home_folder_path }}/{{ user_name }}/.celestia-app/config/config.toml
+      - file: {{ home_folder_path }}/{{ user_name }}/.celestia-app/config/app.toml
