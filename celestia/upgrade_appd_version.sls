@@ -6,7 +6,6 @@
 {% set node_type = celestia_grain[0] if celestia_grain else 'unknown_node_type' %}
 {% set node_config = salt['pillar.get']('celestia_config').get(node_type, {}) %}
 
-
 # Stop the Celestia appd service
 stop_celestia_appd_service:
   service.dead:
