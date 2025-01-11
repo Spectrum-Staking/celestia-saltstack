@@ -15,8 +15,8 @@ copy_active_keys:
     - names: 
       - {{ home_folder_path }}/{{ user_name }}/.celestia-app/config/priv_validator_key.json:
         - source: salt://celestia/keys/{{ celestia_grain[0] }}/appd/priv_validator_key.json
-      - {{ home_folder_path }}/{{ user_name }}/.celestia-app/config/node_key.json
-        - source: salt://celestia/keys/{{ celestia_grain[0]}} /appd/node_key.json
+      - {{ home_folder_path }}/{{ user_name }}/.celestia-app/config/node_key.json:
+        - source: salt://celestia/keys/{{ celestia_grain[0] }}/appd/node_key.json
     - user: celestia
 
 start_celestia:
