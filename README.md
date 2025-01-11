@@ -331,22 +331,22 @@ The `upgrade_celestia_bridge.sls` state performs the following steps:
 
 ## Upgrade Methodology
 
-The following steps outline how to test and execute the upgrades.
+The following steps outline how to test and execute version upgrades.
 
 ### 1. Dry Run (Test Mode)
 
 Use the `test=True` flag to simulate the upgrade process without applying any changes. This allows you to validate the configuration and ensure there are no errors:
 
 ```bash
-sudo salt <minion_name> state.apply celestia.upgrade_celestia_appd test=True
-sudo salt <minion_name> state.apply celestia.upgrade_celestia_bridge test=True
+sudo salt <minion_name> state.apply celestia.upgrade_appd_version test=True
+sudo salt <minion_name> state.apply celestia.upgrade_bridge_version test=True
 ```
 ### 2. Apply the Upgrade
 
 Once the test run is successful, apply the changes to perform the upgrade:
 ```bash
-sudo salt <minion_name> state.apply celestia.upgrade_celestia_appd
-sudo salt <minion_name> state.apply celestia.upgrade_celestia_bridge
+sudo salt <minion_name> state.apply celestia.upgrade_appd_version
+sudo salt <minion_name> state.apply celestia.upgrade_bridge_version
 ```
 
 # Contribution

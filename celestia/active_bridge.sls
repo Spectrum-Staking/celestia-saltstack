@@ -10,7 +10,7 @@ stop_celestia-appd:
 copy_priv_key:
   file.recurse:
     - name: /srv/celestia/{{bridge_dir(node_type, node_config.get('chain_id') )}}/keys/
-    - source: salt://celestia/keys/bridge/keys/
+    - source: salt://celestia/keys/{{ celestia_grain[0] }}/bridge/keys/
     - user: celestia
     - group: celestia
 
