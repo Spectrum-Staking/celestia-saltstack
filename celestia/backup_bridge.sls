@@ -13,7 +13,7 @@ stop_celestia-bridge:
 remove_keys:
   file.absent:
     - names:
-      - '/srv/celestia/{{bridge_dir(node_type, node_config.get('chain_id') )}}/keys'
+      - '{{ home_folder_path }}/{{ user_name }}/{{bridge_dir(node_type, node_config.get('chain_id') )}}/keys'
 
 generate_dummy_bridge_key:
   cmd.run:
