@@ -1,3 +1,5 @@
+{% set celestia_grain = salt['grains.get']('celestia', []) %}
+
 stop_celestia-appd:
   service.dead:
     - name: celestia-appd
