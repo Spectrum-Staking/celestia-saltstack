@@ -28,13 +28,14 @@ celestia_config:
     chain_id: 'mocha-4'
     p2p_port: '46656'
     rpc_port: '46657'
+    grpc_port: '9090'
     double_sign_check_height: '5'
     prometheus_enabled: 'true'
     prometheus_port: '46660'
     celestia_node_version: '0.20.4-mocha'
     indexer: 'kv'
     min_retain_blocks: '0'
-    celestia_bridge_core_ip: 'rpc-mocha.pops.one:26657'
+    celestia_bridge_core_ip: 'consensus-full-mocha-4.celestia-mocha.com'
     snapshot_url: 'https://snapshots.bwarelabs.com/celestia/testnet/'
 
   mainnet:
@@ -43,6 +44,7 @@ celestia_config:
     chain_id: 'celestia'
     p2p_port: '46656'
     rpc_port: '46657'
+    grpc_port: '9090'
     double_sign_check_height: '5'
     prometheus_enabled: 'true'
     prometheus_port: '46660'
