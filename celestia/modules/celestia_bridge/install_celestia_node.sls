@@ -87,7 +87,8 @@ create_celestia_bridge_service:
         Restart=always
         RestartSec=3
         ExecStart={{ home_folder_path }}/{{ user_name }}/bin/celestia bridge start \
-        --core.ip rpc-mocha.pops.one:26657 \
+        --core.ip {{ node_config.get('celestia_bridge_core_ip') }} \
+        --core.port {{ node_config.get('grpc_port') }} \
         --p2p.network mocha
         LimitNOFILE=1400000
         Environment="HOME={{ home_folder_path }}/{{ user_name }}"
